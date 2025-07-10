@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enhanced Highway Car Game</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(45deg, #1a1a2e, #16213e);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+    canvas {
+      background: #222;
+      display: none;
+      margin: 10px auto;
+      border: 2px solid #555;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+      position: relative;
+    }
+    #score {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      color: #00ffff;
+      background: rgba(0,0,0,0.7);
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: none;
+      z-index: 10;
+    }
+    #heartsContainer {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: none;
+      z-index: 10;
+    }
+    .heart {
+      display: inline-block;
+      font-size: 30px;
+      color: #ff4444;
+      margin-right: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .heart.lost { color: #666; }
+    
+    #modeSelector {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+    #modeSelector h3 {
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+    .mode-button {
+      margin: 10px;
+      padding: 15px 25px;
+      font-size: 16px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .mode-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    .mode-button.selected {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      transform: scale(1.05);
+    }
+
+    #startButton, #restartButton {
+      padding: 15px 30px;
+      font-size: 20px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      margin: 10px;
+    }
+    #startButton:hover, #restartButton:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    #restartButton {
+      display: none;
+    }
+
+    .controls {
+      margin: 20px 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+    .controls h4 {
+      color: #00ffff;
+      margin-bottom: 10px;
+    }
+
+    .road-type {
+      color: #00ff00;
+      font-size: 16px;
+      margin: 5px;
+    }
+
+    #gameOverScreen {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      z-index: 20;
+    }
+
+    #loadingScreen {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      z-index: 30;
+    }
+
+    #fps {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #00ff00;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fps">FPS: 0</div>
+
+  <div id="loadingScreen">
+    <h3>Loading Game Assets...</h3>
+    <div id="loadingProgress">Initializing...</div>
+  </div>
+
+  <div id="modeSelector">
+    <h3>Choose Game Mode</h3>
+    <button class="mode-button selected" data-mode="classic">Classic Mode</button>
+    <button class="mode-button" data-mode="truckers">Trucker's Highway</button>
+  </div>
+
+  <div class="controls">
+    <h4>Controls</h4>
+    <p>← → Arrow Keys: Move | Collect power-ups for abilities!</p>
+  </div>
+  <!-- 🎵 Music Control Buttons -->
+  <div id="musicControls" style="margin-bottom: 10px;">
+    <button onclick="window.audioControl.play()">Play</button>
+    <button onclick="window.audioControl.pause()">Pause</button>
+    <button onclick="window.audioControl.skip()">Skip</button>
+  </div>
+
+  <button id="startButton">Start Game</button>
+
+  <canvas id="gameCanvas" width="600" height="630"></canvas>
+
+  <div id="score">Score: 0</div>
+
+  <div id="heartsContainer">
+    <span class="heart" id="heart1">♥</span>
+    <span class="heart" id="heart2">♥</span>
+    <span class="heart" id="heart3">♥</span>
+  </div>
+
+ 
+
+  <div class="road-type">
+    Road: <span id="roadType">City Highway</span>
+  </div>
+
+  <button id="restartButton">Restart</button>
+  <div id="gameUI" style="display: none;">
+  <!-- Optional content -->
+  </div>
+
+  <div id="gameOverScreen">
+    <h2>Game Over!</h2>
+    <p>Final Score: <span id="finalScore">0</span></p>
+    <button id="playAgainButton">Play Again</button>
+  </div>
+
+  <!-- Load order is important: abilities first -->
+  <script src="js/abilitiesAndLives.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+
+</body>
+</html>
