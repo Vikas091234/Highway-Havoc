@@ -8,6 +8,29 @@ A fast-paced, arcade-style highway racing game built using **JavaScript**, **HTM
 
 ## 📁 Project Structure
 
+highway-car-game/
+
+├── index.html
+
+├── js/
+
+│   ├── game.js
+
+│   ├── abilitiesAndLives.js
+
+│   ├── audio.js
+
+├── audio/
+
+│   └── drive.mp3, sixdays.mp3
+
+├── images/
+
+│   └── player.png, enemy1.png, ...
+
+├── README.md
+
+
 
 ---
 
