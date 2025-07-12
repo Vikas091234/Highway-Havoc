@@ -1,95 +1,137 @@
+# 🚗 Highway Havoc
 
-# 🚗 Highway Car Game
-![Gameplay Demo](images/gameplay.gif)
+**Highway Havoc** is a fast-paced, browser-based arcade game built with **JavaScript**, **HTML5 Canvas**, and **CSS**. Choose from 4 unique modes — Classic, Combat, Survival, and Truck — and dominate the road with sharp reflexes, firepower, and power-ups!
 
-A fast-paced, arcade-style highway racing game built using **JavaScript**, **HTML5 Canvas**, and **CSS**. Dodge traffic, collect power-ups, and survive as long as possible on dynamically changing roads!
+---
 
+## 🎮 Game Modes
 
+### 1️⃣ Classic Mode
+
+A pure endless runner. Dodge traffic and survive as long as you can. No enemies, no weapons — just skill and speed.
+
+![Classic Mode](images/gameplay-classic.gif)
+
+---
+
+### 2️⃣ Combat Mode (2 Minutes)
+
+Arm your car with **weapons** and blast through enemy vehicles while dodging traffic. Power-ups enhance your firepower and protection. Can you survive the chaos for 2 full minutes?
+
+![Combat Mode](images/gameplay-combat.gif)
+
+---
+
+### 3️⃣ Survival Mode (2 Minutes)
+
+Hold out for 2 minutes using limited lives and strategically timed **shields** and **boosts**. Enemies appear in clusters, and the road dynamically changes. The longer you survive, the harder it gets.
+
+![Survival Mode](images/gameplay-survival.gif)
+
+---
+
+### 4️⃣ Truck Mode
+
+Take control of a **massive truck** and **ram through enemies** instead of dodging them. This mode focuses on destruction rather than survival.
+
+![Truck Mode](images/gameplay-truck.gif)
+
+---
+
+## 🔊 Music & Audio Features
+
+- 🎵 Integrated background music and SFX
+- 🎚️ Players can **play/pause/skip** tracks
+- Audio handled via `audio.js`, tracks stored in `audio/` folder
+
+---
+
+## 🛠 Tech Stack
+
+- HTML5 Canvas for graphics
+- Vanilla JavaScript for logic
+- CSS for animations and styling
+- Modular JS files (`game.js`, `abilitiesAndLives.js`, etc.)
+
+---
 
 ## 📁 Project Structure
 
-highway-car-game/
+Highway-Havoc/
+
+│
 
 ├── index.html
 
-├── js/
+├── game.js
 
-│   ├── game.js
+├── abilitiesAndLives.js
 
-│   ├── abilitiesAndLives.js
+├── audio.js
 
-│   ├── audio.js
+├── styles.css
 
-├── audio/
-
-│   └── drive.mp3, sixdays.mp3
+│
 
 ├── images/
 
-│   └── player.png, enemy1.png, ...
+│ ├── player.png
 
-├── README.md
+│ ├── enemy1.png ... enemy7.png
 
+│ ├── truck1.png, truck2.png
+
+│ ├── gameplay-classic.gif
+
+│ ├── gameplay-combat.gif
+
+│ ├── gameplay-survival.gif
+
+│ └── gameplay-truck.gif
+
+│
+
+├── audio/
+
+│ ├── drive.mp3
+
+│ └── sixdays.mp3
 
 
 ---
 
-## 🎮 How to Play
+## 🧪 How to Run
 
-- Use **←** and **→** arrow keys to steer the car.
-- **Collect power-ups**:
-  - 🛡️ Shield – temporary invincibility
-  - ⚡ Speed Boost – increases movement speed
-- **Avoid enemy vehicles** – crashing ends the game.
-- The environment and traffic get tougher as your score increases.
-
----
-
-## 💻 How to Run
-
-1. Clone or download this repository.
+1. Clone or download the repository.
 2. Open `index.html` in your browser.
-3. No server required — it's a fully client-side game.
+3. **No server setup needed.**
 
 ---
 
-## 🔊 Audio Features
+## 📌 Features
 
-- Background music starts when the game begins.
-- Available tracks:
-  - `drive.mp3`
-  - `sixdays.mp3`
-- Music loops continuously. Controls allow play/pause/skip.
-
----
-
-## 🛠️ Customization
-
-- Add new enemies → place `.png` files in `images/` and update `game.js`.
-- Add new tracks → place `.mp3` files in `audio/` and update `audio.js`.
-- Adjust game difficulty → tweak `spawnEnemy()` logic in `game.js`.
+- 4 fully functional game modes
+- Power-ups: Shield, Speed Boost
+- Dynamic enemy spawn logic and road types
+- Particle effects and audio integration
+- Clean modular code and reusable components
+- Game Over screen and restart support
 
 ---
 
-## ✨ Features
+## 📜 License & Credits
 
-- Smooth enemy spawn logic with random patterns
-- Dynamic road types: city, snow, desert, night
-- Power-ups: shields, speed boosts
-- Particle effects and visual feedback
-- Optimized for browser performance (FPS monitored)
-- Restart option after game over
+This project was created by **Vikas Raj** as part of a personal learning journey and academic challenge.  
+All assets (images/audio) are used for educational purposes. Please replace them with your own licensed media for public/commercial deployment.
 
 ---
 
-## 📌 Credits
+## 🙌 Contributions
 
-Developed by **Vikas Raj**.  
-Images and audio used are for educational/demo purposes. Please replace with licensed assets for public or commercial use.
+PRs are welcome for:
+- New game modes
+- Mobile optimization
+- Scoreboard & Highscore tracking
 
 ---
 
-## 🔐 License
-
-This project is intended for educational and personal use.  
-Do not redistribute or use commercially without replacing all third-party assets.
