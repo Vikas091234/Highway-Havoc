@@ -23,14 +23,10 @@
     }
     #score {
       position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 24px;
+      top: 10px;
+      right: 10px;
+      font-size: 18px;
       color: #00ffff;
-      background: rgba(0,0,0,0.7);
-      padding: 10px 20px;
-      border-radius: 10px;
-      display: none;
       z-index: 10;
     }
     #heartsContainer {
@@ -48,7 +44,22 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }
     .heart.lost { color: #666; }
-    
+
+    #ammoContainer {
+      display: none;
+      position: absolute;
+      top: 70px;
+      left: 20px;
+      z-index: 10;
+    }
+    .bullet-icon {
+      display: inline-block;
+      font-size: 24px;
+      color: #ffd700;
+      margin-right: 4px;
+      text-shadow: 0 0 5px rgba(255,215,0,0.7);
+    }
+
     #modeSelector {
       margin: 20px 0;
       padding: 20px;
@@ -80,25 +91,70 @@
       background: linear-gradient(45deg, #ff6b6b, #ee5a24);
       transform: scale(1.05);
     }
+    /* Enhanced button styles for startButton, resetHighScores, and consistency */
+    /* Glassy purple button styles for startButton and resetHighScores */
+    button { 
+      padding: 12px 24px; 
+      margin: 10px; 
+      background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(75, 0, 130, 0.8)); /* Glassy purple gradient */
+      color: #fff; 
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+      border-radius: 12px; /* More rounded edges */
+      cursor: pointer; 
+      font-size: 16px; 
+      font-weight: bold; 
+      font-family: 'Segoe UI', Arial, sans-serif; 
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease; 
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4); /* Purple glow */
+      backdrop-filter: blur(5px); /* Glassy effect */
+    }
+    button:hover { 
+      background: linear-gradient(135deg, rgba(147, 112, 219, 0.9), rgba(106, 90, 205, 0.9)); /* Lighter purple on hover */
+      box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6); /* Stronger glow */
+      transform: translateY(-2px); /* Lift effect */
+    }
+    button:active { 
+      transform: translateY(0); 
+      box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3); /* Reduced glow on click */
+    }
 
-    #startButton, #restartButton {
-      padding: 15px 30px;
-      font-size: 20px;
-      background: linear-gradient(45deg, #667eea, #764ba2);
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      margin: 10px;
+    /* Style roadSelect to match glassy purple buttons */
+    select#roadSelect { 
+      padding: 12px 24px; 
+      margin: 10px; 
+      background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(75, 0, 130, 0.8)); /* Match button gradient */
+      color: #fff; 
+      border: 1px solid rgba(255, 255, 255, 0.3); 
+      border-radius: 12px; /* Match button rounded edges */
+      font-size: 16px; 
+      font-weight: bold; 
+      font-family: 'Segoe UI', Arial, sans-serif; 
+      cursor: pointer; 
+      appearance: none; 
+      -webkit-appearance: none; 
+      -moz-appearance: none; 
+      background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); 
+      background-repeat: no-repeat; 
+      background-position: right 12px top 50%; 
+      width: 220px; 
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease; 
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4); /* Purple glow */
+      backdrop-filter: blur(5px); /* Glassy effect */
     }
-    #startButton:hover, #restartButton:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    select#roadSelect:hover { 
+      background: linear-gradient(135deg, rgba(147, 112, 219, 0.9), rgba(106, 90, 205, 0.9)); 
+      box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6); 
+      transform: translateY(-2px); 
     }
-    #restartButton {
-      display: none;
+    select#roadSelect:focus { 
+      outline: none; 
+      border-color: rgba(255, 255, 255, 0.5); 
+      box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3); 
+    }
+    select#roadSelect option { 
+      background: rgba(75, 0, 130, 0.9); /* Solid purple for options */
+      color: #fff; 
+      font-size: 14px; 
     }
 
     .controls {
@@ -163,25 +219,73 @@
 
   <div id="modeSelector">
     <h3>Choose Game Mode</h3>
-    <button class="mode-button selected" data-mode="classic">Classic Mode</button>
-    <button class="mode-button" data-mode="truckers">Trucker's Highway</button>
-  </div>
+    <button class="mode-button selected" data-mode="classic">Classic</button>
+    <button class="mode-button" data-mode="combat">Combat</button>
+    <button class="mode-button" data-mode="survival">Survival</button>
+    <button class="mode-button" data-mode="truckers">Truckers</button>
+    <div id="highScores" style="font-size:18px;color:#0ff;margin-top:20px">
+      Classic: <span id="h-classic">0</span> 
+      Combat: <span id="h-combat">0</span> 
+      Survival: <span id="h-survival">0</span> 
+      Truckers: <span id="h-truckers">0</span>
+    
+    <div id="musicControls" style="margin:20px 0;">
+      <button class="styled-btn" id="btnPlay">▶</button>
+      <button class="styled-btn" id="btnPause">⏸</button>
+      <button class="styled-btn" id="btnNext">⏭</button>
+    </div>
 
-  <div class="controls">
-    <h4>Controls</h4>
-    <p>← → Arrow Keys: Move | Collect power-ups for abilities!</p>
-  </div>
-  <!-- 🎵 Music Control Buttons -->
-  <div id="musicControls" style="margin-bottom: 10px;">
-    <button onclick="window.audioControl.play()">Play</button>
-    <button onclick="window.audioControl.pause()">Pause</button>
-    <button onclick="window.audioControl.skip()">Skip</button>
+    <style>
+    .styled-btn {
+      margin: 0 6px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all .3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,.3);
+    }
+    .styled-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.4);
+    }
+    #roadSelect {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 25px;
+      border: none;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: #fff;
+      cursor: pointer;
+      outline: none;
+    }
+    #roadSelect option {
+      background: #333;
+      color: #fff;
+    }
+    </style>
+
+    <div id="roadPicker" style="margin:10px 0;">
+      <label style="color:#0ff;font-size:16px;">Starting Road:
+        <select id="roadSelect">
+          <option value="city">City Highway</option>
+          <option value="desert">Desert Road</option>
+          <option value="snow">Snowy Pass</option>
+          <option value="night">Night Highway</option>
+        </select>
+      </label>
+    </div>
+
+    </div>
   </div>
 
   <button id="startButton">Start Game</button>
-
+  <button id="resetHighScores">Reset High Scores</button>
+  <div id="canvasSpacer" style="height:4rem;display:none;"></div>
   <canvas id="gameCanvas" width="600" height="630"></canvas>
-
   <div id="score">Score: 0</div>
 
   <div id="heartsContainer">
@@ -189,28 +293,56 @@
     <span class="heart" id="heart2">♥</span>
     <span class="heart" id="heart3">♥</span>
   </div>
+  <div id="gameMusic" style="position:absolute; top:20px; left:120px; display:none; z-index:10;">
+    <button class="mini-btn" id="gPlay">▶</button>
+    <button class="mini-btn" id="gPause">⏸</button>
+    <button class="mini-btn" id="gNext">⏭</button>
+  </div>
 
- 
-
+  <style>
+  .mini-btn {
+    margin:0 4px;
+    padding:6px 12px;
+    font-size:14px;
+    background:linear-gradient(45deg,#667eea,#764ba2);
+    color:#fff;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+  }
+  </style>
+  <div id="ammoDisplay" style="position:absolute; top:60px; left:20px; color:#ffd700; font-size:22px;"></div>
   <div class="road-type">
-    Road: <span id="roadType">City Highway</span>
+    Road: <span id="roadType"></span>
   </div>
-
-  <button id="restartButton">Restart</button>
-  <div id="gameUI" style="display: none;">
-  <!-- Optional content -->
-  </div>
+  
+  <button id="restartButton" style="display:none;">Restart</button>
+  <div id="ammoContainer" style="display:none;"></div>
 
   <div id="gameOverScreen">
     <h2>Game Over!</h2>
     <p>Final Score: <span id="finalScore">0</span></p>
+    <p>Best <span id="bestScore">0</span></p>
     <button id="playAgainButton">Play Again</button>
   </div>
+    <div id="highScoreDisplay" style="color:#00ff00;font-size:18px;"></div>
+    
+  </div>
+  <div id="controls" class="controls">
+    <h4>Controls</h4>
+    <p>← → Arrow Keys: Move | Spacebar: Shoot (Combat Mode) | Collect power-ups for abilities!</p>
+  </div>
+
 
   <!-- Load order is important: abilities first -->
-  <script src="js/abilitiesAndLives.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/game.js"></script>
+  <script src="audio.js"></script>
+  <script>
+  document.getElementById('btnPlay').onclick  = () => window.audioControl?.play();
+  document.getElementById('btnPause').onclick = () => window.audioControl?.pause();
+  document.getElementById('btnNext').onclick  = () => window.audioControl?.skip();
+  </script>
+  <script src="abilitiesAndLives.js"></script>
+  <script src="game.js"></script>
 
 </body>
 </html>
