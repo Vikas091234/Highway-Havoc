@@ -46,7 +46,7 @@ function spawnPowerUp() {
 
   const lanes = [40,117,194,271,348,425,502];
   const x = lanes[Math.floor(Math.random()*lanes.length)];
-  const types=['shield','speed'];
+  const types = mode === 'combat' ? ['shield','speed','ammo'] : ['shield','speed'];
   
 
   const type = types[Math.floor(Math.random()*types.length)];
