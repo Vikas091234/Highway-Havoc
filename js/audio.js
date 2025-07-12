@@ -1,6 +1,6 @@
 // audio.js
 
-const tracks = ['audio/drive.mp3', 'audio/sixdays.mp3'];
+const tracks = ['drive.mp3', 'sixdays.mp3'];
 let currentTrackIndex = 0;
 const audioPlayer = new Audio(tracks[currentTrackIndex]);
 
